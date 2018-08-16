@@ -3,4 +3,8 @@ build/*
 uWebSockets
 dist/*
 uWebSockets.egg-info/*
-
+.vagrant/*
+debug.ld
+manylinux.map
+uWebSockets.map
+windows/*.dll

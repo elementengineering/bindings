@@ -1,0 +1,34 @@
+# Generate UUIDs to hack around bug with docker container name and image tags (otherwise will get conflict on vagrant destroy)
+require 'securerandom'
+
+Vagrant.configure("2") do |config|
+  config.vm.define "devel" do |d|
+    d.vm.hostname = "devel"
+    d.vm.provider "docker" do |p|
+        p.build_dir = "docker/devel"
+        p.remains_running = true
+        p.has_ssh = true
+    end
+  end
+  
+  config.vm.define "manylinux" do |d|
+    d.vm.hostname = "manylinux"
+    d.vm.provider "docker" do |p|
+        p.build_dir = "docker/manylinux"
+        p.remains_running = true
+        p.has_ssh = true
+        p.create_args = ["--cap-add", "SYS_PTRACE"]
+    end
+  end
+  
+  config.vm.define "test" do |d|
+    d.vm.hostname = "test"
+    d.vm.provider "docker" do |p|
+        p.build_dir = "docker/test"
+        p.remains_running = true
+        p.has_ssh = true
+        p.create_args = ["--cap-add", "SYS_PTRACE"]
+    end
+  end
+  
+end

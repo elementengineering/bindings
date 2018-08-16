@@ -1,0 +1,3 @@
+deb http://http.debian.net/debian buster main contrib non-free
+deb http://security.debian.org/ buster/updates main contrib non-free
+deb-src http://security.debian.org/ buster/updates main contrib non-free

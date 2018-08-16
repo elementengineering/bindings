@@ -1,0 +1,18 @@
+-nostartfiles
+-Bstatic
+-lc
+-lstdc++
+-Bdynamic
+-lgcc
+-lc
+-Bstatic
+-lz
+-luv
+-lssl
+-lcrypto
+-z initfirst
+/glibc-glibc-2.10/build/elf/soinit.os
+/glibc-glibc-2.10/build/libc_pic.a
+--default-symver
+--version-script=/vagrant/manylinux.map
+-Bdynamic

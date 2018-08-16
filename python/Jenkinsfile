@@ -1,0 +1,54 @@
+#!/usr/bin/env groovy
+pipeline {
+    agent any
+    triggers { cron("@daily") }
+    options {
+        timeout(time: 1, unit: 'HOURS')
+        //retry(4) //Doesn't actually work see https://issues.jenkins-ci.org/browse/JENKINS-46354
+    }
+    stages {
+        stage('Start Vagrant') {
+            steps {
+                sh 'cd python && vagrant up'
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                sh 'cd python && make vagrant/wheels'
+            }
+        }
+        
+        stage('Install') {
+            steps {
+                sh 'cd python && make vagrant/install'
+            }
+        }
+        
+        stage('Tests') {
+            steps {
+                sh 'cd python && make vagrant/test'
+            }
+        }
+        
+        stage('Uninstall') {
+            steps {
+                sh 'cd python && make vagrant/uninstall'
+            }
+        }
+    }
+    post {
+        failure {
+            sh 'echo Failed'
+            sh '(cd python; make vagrant/uninstall; make vagrant/clean) || echo "Could not clean!"'
+        }
+        success {
+            sh 'echo Success!'
+        }
+        always {
+            step([$class: 'LogParserPublisher', parsingRulesPath: '/var/lib/jenkins/jenkins-rule-logparser', useProjectRule: false])
+            sh 'cd python && vagrant halt'
+        }
+
+    }
+}
