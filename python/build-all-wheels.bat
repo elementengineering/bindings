@@ -16,7 +16,7 @@ set ANACONDA_BASE64=C:\ProgramData\Anaconda2-64
 :: Location of your package, can be a directory or a git repo.
 
 :: A directory
-set PKG_REPO=C:\Users\Sam.Moore\Documents\uWebSockets-bindings\python
+set PKG_REPO=C:\Local\Sam.Moore\uWebSockets-bindings\python
 
 set WHEEL_DIR=%PKG_REPO%\dist
 
@@ -42,6 +42,11 @@ set ENV27=envs\py2.7
 set ENV33=envs\py3.3
 set ENV34=envs\py3.4
 set ENV36=envs\py3.6
+set ENV37=envs\py3.7
+
+:: cd %ANACONDA_BASE%
+:: Use -p not -n to avoid paths messing with each other
+:: Scripts\conda.exe create -p envs\py3.7 python=3.7 numpy pip mingw wheel ssl
 
 :: Tell Python to select correct SDK version
 set DISTUTILS_USE_SDK=1
@@ -60,6 +65,11 @@ set PATH=%ANACONDA_BASE%\%ENV36%;%ANACONDA_BASE%\%ENV36%\Scripts;%CPATH%
 echo "Python 3.6 32bit"
 call :Build
 
+:: 3.7
+set PATH=%ANACONDA_BASE%\%ENV37%;%ANACONDA_BASE%\%ENV37%\Scripts;%CPATH%
+echo "Python 3.7 32bit"
+call :Build
+
 
 :: Set 64-bit environment
 
@@ -71,6 +81,14 @@ set CPATH=C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64;%
 set PATH=%ANACONDA_BASE64%\%ENV36%;%ANACONDA_BASE64%\%ENV36%\Scripts;%CPATH%;%PATH%
 echo "Python 3.6 64bit"
 call :Build
+
+
+:: 3.7
+set PATH=%ANACONDA_BASE64%\%ENV37%;%ANACONDA_BASE64%\%ENV37%\Scripts;%CPATH%
+echo "Python 3.7 64bit"
+call :Build
+
+
 
 goto:END
 
@@ -89,7 +107,7 @@ pip install wheel -q
 color 07
 pip wheel --no-deps %PKG_REPO% --wheel-dir %WHEEL_DIR%
 color 07
-python %PKG_REPO%/setup.py fix-wheel
+python %PKG_REPO%\setup.py fix-wheel
 color 07
 EXIT /B 0
 

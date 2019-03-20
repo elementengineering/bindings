@@ -158,7 +158,7 @@ if platform.system().lower() == "windows" and "fix-wheel" in sys.argv:
 setup(name="uWebSockets",
     version=version,
     description="Python Bindings for the uWebSockets library",
-    url="https://github.com/uNetworking/uWebSockets-bindings/",
+    url="https://github.com/elementengineering/uWebSockets-bindings/",
     author="Sam Moore",
     author_email="smoore@elementengineering.com.au",
     license="MIT",
@@ -171,7 +171,8 @@ setup(name="uWebSockets",
         "Programming Language :: Python :: 2",
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6"
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7"
     ], 
     keywords="websockets development",
     ext_modules =[uWebSockets],
